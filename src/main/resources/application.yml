@@ -1,0 +1,15 @@
+spring:
+  data:
+    neo4j:
+      username: neo4j
+      password: secret
+  cloud:
+    stream:
+      bindings:
+        producer:
+          destination: ${ACT_QUERY_PRODUCER_DEST:engineEvents}
+          contentType: ${ACT_QUERY_PRODUCER_CONTENT_TYPE:application/json}
+        queryConsumer:
+          destination: ${ACT_QUERY_CONSUMER_DEST:engineEvents}
+          group: ${ACT_QUERY_CONSUMER_GROUP:neo4jlog}
+          contentType: ${ACT_QUERY_CONSUMER_CONTENT_TYPE:application/json}
