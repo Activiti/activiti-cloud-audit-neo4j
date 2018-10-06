@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.audit;
+package org.activiti.audit.repository;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
+import org.activiti.audit.entity.CloudTaskCompletedEventEntity;
+import org.springframework.data.repository.CrudRepository;
 
-@SpringBootApplication
-@EnableNeo4jRepositories
-@ComponentScan({
-        "org.activiti.audit.handler"
-})
-public class ActivitiCloudAuditNeo4jApplication {
+public interface CloudTaskCompletedEventRepository extends CrudRepository<CloudTaskCompletedEventEntity, String> {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ActivitiCloudAuditNeo4jApplication.class, args);
-    }
 }

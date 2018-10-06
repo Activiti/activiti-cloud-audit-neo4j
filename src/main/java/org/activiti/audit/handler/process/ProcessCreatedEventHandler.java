@@ -17,11 +17,14 @@ package org.activiti.audit.handler.process;
 
 
 import org.activiti.api.process.model.events.ProcessRuntimeEvent;
+import org.activiti.audit.entity.CloudProcessCreatedEventEntity;
 import org.activiti.audit.handler.QueryEventHandler;
+import org.activiti.audit.repository.CloudProcessCreatedEventRepository;
 import org.activiti.cloud.api.model.shared.events.CloudRuntimeEvent;
-import org.activiti.cloud.api.process.model.events.CloudProcessCreatedEvent;
+import org.activiti.cloud.api.process.model.impl.events.CloudProcessCreatedEventImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -30,11 +33,15 @@ public class ProcessCreatedEventHandler implements QueryEventHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProcessCreatedEventHandler.class);
 
+    @Autowired
+    private CloudProcessCreatedEventRepository cloudProcessCreatedEventRepository;
+
     @Override
     public void handle(CloudRuntimeEvent<?, ?> event) {
-        CloudProcessCreatedEvent createdEvent = (CloudProcessCreatedEvent) event;
-        LOGGER.debug("Handling creted process" + createdEvent.getEntity().getId());
-
+        CloudProcessCreatedEventImpl createdProcessEvent = (CloudProcessCreatedEventImpl) event;
+        LOGGER.debug("Handling created process" + createdProcessEvent.getEntity().getId());
+        CloudProcessCreatedEventEntity cloudProcessCreatedEventEntity = new CloudProcessCreatedEventEntity(createdProcessEvent);
+        cloudProcessCreatedEventRepository.save(cloudProcessCreatedEventEntity);
     }
 
     @Override
